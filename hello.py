@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import url_for
+from flask import request
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -35,9 +36,12 @@ def projects():
 def about():
     return 'The about page'
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return 'login'
+    if request.method == 'POST':
+        return do_the_login()
+    else:
+        return show_the_login_form()
 
 @app.route('/player/<playername>')
 def profile(playername):
